@@ -1,0 +1,22 @@
+steps:
+  # Build and push container image
+  # using the official maven image
+  - name: maven:3.6-jdk-11-slim
+    entrypoint: "mvn"
+    args: [
+      "compile", "jib:build",
+      "-Dimage=gcr.io/$PROJECT_ID/todo-backend-server",
+    ]
+  # Deploy the image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run", "deploy", "todo-backend-server",
+        "--image", "gcr.io/$PROJECT_ID/todo-backend-server",
+        "--region", "europe-west1",
+        "--platform", "managed",
+        "--allow-unauthenticated",
+        "--add-cloudsql-instances", "sql-db",
+        "--memory", "256Mi",
+        "--max-instances", "5"
+      ]
