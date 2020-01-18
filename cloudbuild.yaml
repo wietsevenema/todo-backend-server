@@ -17,6 +17,5 @@ steps:
         "--platform", "managed",
         "--allow-unauthenticated",
         "--add-cloudsql-instances", "sql-db",
-        "--memory", "256Mi",
         "--max-instances", "5"
       ]

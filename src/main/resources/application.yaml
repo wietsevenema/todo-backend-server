@@ -8,9 +8,12 @@ jackson:
   serializationInclusion: ALWAYS
 datasources:
   default:
-    url: jdbc:mysql:///todo?cloudSqlInstance=wv-chapter-3:europe-west1:sql-db&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
+    url: "jdbc:mysql:///todo?\
+      cloudSqlInstance=cloud-run-book:europe-west1:sql-db&\
+      socketFactory=com.google.cloud.sql.mysql.SocketFactory&\
+      useSSL=false"
     username: root
-#    password: secret
+    useSSL: true
     driverClass: com.mysql.cj.jdbc.Driver
     minimumIdle: 1
     maximumPoolSize: 1
