@@ -5,6 +5,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 
 import java.lang.management.ManagementFactory;
+import java.util.Optional;
 
 @Controller()
 public class TodoController {
@@ -23,7 +24,7 @@ public class TodoController {
 
     @Get("/{id:[0-9]+}")
     public HttpResponse findById(String id) {
-        var todo = todoRepository.findById(id);
+        Optional<Todo> todo = todoRepository.findById(id);
         if (todo.isEmpty()) {
             return HttpResponse.notFound();
         }
@@ -38,7 +39,7 @@ public class TodoController {
 
     @Delete("/{id:[0-9]+}")
     public HttpResponse deleteById(String id) {
-        var todo = todoRepository.findById(id);
+        Optional<Todo> todo = todoRepository.findById(id);
         if (todo.isEmpty()) {
             return HttpResponse.notFound();
         }
@@ -48,11 +49,11 @@ public class TodoController {
 
     @Patch("{id:[0-9]+}")
     public HttpResponse patchById(String id, @Body Todo updatedTodo) {
-        var byId = todoRepository.findById(id);
+        Optional<Todo> byId = todoRepository.findById(id);
         if (byId.isEmpty()) {
             return HttpResponse.notFound();
         }
-        var todo = byId.get();
+        Todo todo = byId.get();
         if (updatedTodo.getTitle() != null) {
             todo.setTitle(updatedTodo.getTitle());
         }

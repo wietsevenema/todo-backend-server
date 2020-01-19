@@ -4,10 +4,10 @@
   <artifactId>server</artifactId>
   <version>0.0.0</version>
   <properties>
-    <micronaut.version>1.2.4</micronaut.version>
-    <micronaut.data.version>1.0.0.M5</micronaut.data.version>
-    <jdk.version>11</jdk.version>
-    <jib.container.jvmFlags>-XX:MinRAMPercentage=80,-XX:MaxRAMPercentage=80</jib.container.jvmFlags>
+    <micronaut.version>1.2.9</micronaut.version>
+    <micronaut.data.version>1.0.0.RC1</micronaut.data.version>
+    <jdk.version>8</jdk.version>
+    <jib.container.jvmFlags>-XX:TieredStopAtLevel=1</jib.container.jvmFlags>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -107,7 +107,7 @@
         <version>1.8.0</version>
         <configuration>
           <from>
-            <image>adoptopenjdk/openjdk11:jdk-11.0.4_11</image>
+            <image>adoptopenjdk/openjdk8</image>
           </from>
         </configuration>
       </plugin>

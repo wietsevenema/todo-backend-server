@@ -13,8 +13,7 @@ datasources:
       socketFactory=com.google.cloud.sql.mysql.SocketFactory&\
       useSSL=false"
     username: root
-    useSSL: true
-    driverClass: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     minimumIdle: 1
     maximumPoolSize: 1
     schema-generate: CREATE
