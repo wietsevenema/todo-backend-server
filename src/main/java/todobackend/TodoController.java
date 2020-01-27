@@ -25,10 +25,10 @@ public class TodoController {
     @Get("/{id:[0-9]+}")
     public HttpResponse findById(String id) {
         Optional<Todo> todo = todoRepository.findById(id);
-        if (todo.isEmpty()) {
-            return HttpResponse.notFound();
+        if (todo.isPresent()) {
+            return HttpResponse.ok(todo);
         }
-        return HttpResponse.ok(todo);
+        return HttpResponse.notFound();
     }
 
     @Delete(produces = MediaType.APPLICATION_JSON)
@@ -40,31 +40,33 @@ public class TodoController {
     @Delete("/{id:[0-9]+}")
     public HttpResponse deleteById(String id) {
         Optional<Todo> todo = todoRepository.findById(id);
-        if (todo.isEmpty()) {
+        if (todo.isPresent()) {
+            todoRepository.delete(todo.get());
+            return HttpResponse.ok();
+        } else {
             return HttpResponse.notFound();
         }
-        todoRepository.delete(todo.get());
-        return HttpResponse.ok();
     }
 
     @Patch("{id:[0-9]+}")
     public HttpResponse patchById(String id, @Body Todo updatedTodo) {
         Optional<Todo> byId = todoRepository.findById(id);
-        if (byId.isEmpty()) {
+        if (byId.isPresent()) {
+            Todo todo = byId.get();
+            if (updatedTodo.getTitle() != null) {
+                todo.setTitle(updatedTodo.getTitle());
+            }
+            if (updatedTodo.getCompleted() != null) {
+                todo.setCompleted(updatedTodo.getCompleted());
+            }
+            if (updatedTodo.getSortOrder() != null) {
+                todo.setSortOrder(updatedTodo.getSortOrder());
+            }
+            todoRepository.update(todo);
+            return HttpResponse.ok(todo);
+        } else {
             return HttpResponse.notFound();
         }
-        Todo todo = byId.get();
-        if (updatedTodo.getTitle() != null) {
-            todo.setTitle(updatedTodo.getTitle());
-        }
-        if (updatedTodo.getCompleted() != null) {
-            todo.setCompleted(updatedTodo.getCompleted());
-        }
-        if (updatedTodo.getSortOrder() != null) {
-            todo.setSortOrder(updatedTodo.getSortOrder());
-        }
-        todoRepository.update(todo);
-        return HttpResponse.ok(todo);
     }
 
     @Post()
